@@ -18,7 +18,7 @@
 <!--
 `stripe-form`
 
-@demo demo/stripe-form-demo.html 
+@demo demo/stripe-form-demo.html
 -->
 
 <dom-module id="stripe-form">
@@ -44,27 +44,27 @@
         margin: 0;
         padding: 5px;
       }
-      
+
       paper-button.cancel {
-          background-color: #fff;
-          color: var(--paper-blue-500);
-          --paper-button-raised-keyboard-focus: {
-              background-color: var(--paper-blue-a200) !important;
-              color: white !important;
-          };
+        background-color: #fff;
+        color: var(--paper-blue-500);
+        --paper-button-raised-keyboard-focus: {
+          background-color: var(--paper-blue-a200) !important;
+          color: white !important;
+        };
       }
 
       paper-button.add {
-          background-color: var(--paper-blue-500);
-          color: white;
-          --paper-button-raised-keyboard-focus: {
-              background-color: var(--paper-blue-a200) !important;
-              color: white !important;
-          };
+        background-color: var(--paper-blue-500);
+        color: white;
+        --paper-button-raised-keyboard-focus: {
+          background-color: var(--paper-blue-a200) !important;
+          color: white !important;
+        };
       }
 
     </style>
-    
+
     <stripe-form-add-card-button hidden$="{{_hasCard}}" id="addCardButton" on-tap="openDialog"></stripe-form-add-card-button>
 
     <paper-dialog id="cardDialog" class="size-position" with-backdrop>
@@ -76,90 +76,103 @@
       </div>
     </paper-dialog>
 
-    <stripe-card-preview 
-      id="cardPreview"
-      hidden$="{{!_hasCard}}"
-      card-type="[[cardType]]" 
-      last-four="[[lastFour]]"
-      expiry-month="[[expiryMonth]]"
-      expiry-year="[[expiryYear]]"
-      on-stripe-card-preview-removed="_removeCard"></stripe-card-preview>
+    <stripe-card-preview
+        id="cardPreview"
+        hidden$="{{!_hasCard}}"
+        card-type="[[cardType]]"
+        last-four="[[lastFour]]"
+        expiry-month="[[expiryMonth]]"
+        expiry-year="[[expiryYear]]"
+        on-stripe-card-preview-removed="_removeCard"
+    ></stripe-card-preview>
 
   </template>
 
   <script>
+    /* global DEXS */
     Polymer({
 
       is: 'stripe-form',
 
       behaviors: [
         DEXS.CreditCardFormBehavior,
-        Polymer.NeonAnimationRunnerBehavior
+        Polymer.NeonAnimationRunnerBehavior,
       ],
 
       properties: {
         lastFour: {
           type: String,
           value: '',
-          notify: true
+          notify: true,
         },
+
         stripePublishableKey: {
           type: String,
           value: '',
-          notify: true
+          notify: true,
         },
+
         cardType: {
           type: String,
           value: '_blank',
-          notify: true
+          notify: true,
         },
+
         country: {
           type: String,
           value: '',
-          notify: true
+          notify: true,
         },
+
         expiryMonth: {
           type: Number,
-          notify: true
+          notify: true,
         },
+
         expiryYear: {
           type: Number,
-          notify: true
+          notify: true,
         },
+
         cardId: {
           type: String,
           value: '',
           readonly: true,
-          notify: true
+          notify: true,
         },
+
         cardToken: {
           type: String,
           value: '',
           notify: true,
           readonly: true,
-          observer: '_cardTokenChanged'
+          observer: '_cardTokenChanged',
         },
+
         _hasCard: {
           type: Boolean,
           value: false,
-          notify: true
+          notify: true,
         },
+
         _cardAdded: {
           type: Boolean,
           value: false,
-          notify: true
+          notify: true,
         },
+
         _hasErrorMessage: {
           type: Boolean,
           value: false,
-          notify: true
+          notify: true,
         },
+
         errorMessage: {
           type: String,
           value: '',
           notify: true,
-          observer: '_errorMessageChanged'
-        }
+          observer: '_errorMessageChanged',
+        },
       },
 
       listeners: {
@@ -170,46 +183,41 @@
       },
 
       _getOffset: function( el ) {
-          var _x = 0;
-          var _y = 0;
-          while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
-              _x += el.offsetLeft - el.scrollLeft;
-              _y += el.offsetTop - el.scrollTop;
-              el = el.offsetParent;
-          }
-          console.log({ top: _y, left: _x });
-          return { top: _y, left: _x };
+        var _x = 0;
+        var _y = 0;
+        while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
+            _x += el.offsetLeft - el.scrollLeft;
+            _y += el.offsetTop - el.scrollTop;
+            el = el.offsetParent;
+        }
+        console.log({top: _y, left: _x});
+        return {top: _y, left: _x};
       },
 
       _setupDialogAnimation: function() {
         var dialog = this.$.cardDialog;
         var button = this.$.addCardButton;
         dialog.animationConfig = dialog.animationConfig || {};
-        dialog.animationConfig.entry =  [{
-            name: 'scale-up-animation',
-            node: dialog,
-            transformOrigin: '0px ' + this._getOffset(button).top + 'px',
-            timing: {
-                duration: 300
-            }
-          }, {
-            name: 'fade-in-animation',
-            node: dialog,
-            timing: {
-                delay: 10,
-                duration: 150
-            }
-          }
-        ];
+        dialog.animationConfig.entry = [{
+          name: 'scale-up-animation',
+          node: dialog,
+          transformOrigin: '0px ' + this._getOffset(button).top + 'px',
+          timing: {
+            duration: 300,
+          },
+        }, {
+          name: 'fade-in-animation',
+          node: dialog,
+          timing: {
+            delay: 10,
+            duration: 150,
+          },
+        }];
         dialog.animationConfig.exit = {
-            name: 'fade-out-animation',
-            node: dialog,
-            duration: 100
+          name: 'fade-out-animation',
+          node: dialog,
+          duration: 100,
         };
-      },
-
-      ready: function() {
-        
       },
 
       openDialog: function() {
@@ -230,7 +238,7 @@
         }
       },
 
-      _removeCard: function() { 
+      _removeCard: function() {
         this.lastFour = '';
         this.cardType = '';
         this.country = '';
@@ -240,8 +248,8 @@
         this.cardToken = '';
       },
 
-      _cardTokenChanged: function(n,o) {
-        this._hasCard = !!n;
+      _cardTokenChanged: function(cardToken, o) {
+        this._hasCard = !!cardToken;
       },
 
       _resolveCardType: function(name) {
@@ -251,7 +259,7 @@
           'mastercard': 'mastercard',
           'discover': 'discover',
           'diners club': 'diners',
-          'jbc': 'jbc'
+          'jbc': 'jbc',
         };
         return cardMap[name] || 'unknown';
       },
@@ -269,41 +277,39 @@
       },
 
       _wiggle: function(element) {
-        element.style.display = "block";
+        element.style.display = 'block';
         var x = -1;
-        var ml = element.style.marginLeft;
-        var mt = element.style.marginTop;
-        interval = setInterval(function() {
-            if(x == -1) {
-                element.style.marginLeft = '5px';
-            } else {
-                switch(x) {
-                    case 0 :
-                        element.style.marginLeft = '-5px';
-                        break;
-                    case 1 :
-                        element.style.marginLeft = '';
-                        element.style.marginTop = '5px';
-                        break;
-                    case 2 :
-                        element.style.marginTop = '-5px';
-                        break;
-                    default :
-                        element.style.marginTop = '';
-                        elemmnt.style.marginLeft = '';
-                        clearInterval(interval);
-                        break;
-                }
+        var interval = setInterval(function() {
+          if(x == -1) {
+            element.style.marginLeft = '5px';
+          } else {
+            switch(x) {
+              case 0 :
+                  element.style.marginLeft = '-5px';
+                  break;
+              case 1 :
+                  element.style.marginLeft = '';
+                  element.style.marginTop = '5px';
+                  break;
+              case 2 :
+                  element.style.marginTop = '-5px';
+                  break;
+              default :
+                  element.style.marginTop = '';
+                  element.style.marginLeft = '';
+                  clearInterval(interval);
+                  break;
             }
-            x++;
+          }
+          x++;
         }, 50);
       },
 
       _formValidationFailed: function(e) {
         // this._wiggle(this.$.cardDialog);
-        if (!!e.detail.exception) { 
+        if (e.detail.exception) {
           this.errorMessage = 'A fatal error has occurred';
-          console.log("Exception raised: ", e.detail.exception);
+          console.log('Exception raised: ', e.detail.exception);
         } else {
           this.errorMessage = e.detail.error.message;
         }
@@ -314,8 +320,7 @@
         this.errorMessage = undefined;
       },
 
-      _formCancelled: function(e) {
-      }
+      _formCancelled: function(e) {},
     });
   </script>
 </dom-module>
