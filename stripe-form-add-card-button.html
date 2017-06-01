@@ -3,6 +3,7 @@
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../paper-styles/typography.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="shared-styles.html">
 
 <!--
 `stripe-form-add-card-button`
@@ -12,7 +13,7 @@
 
 <dom-module id="stripe-form-add-card-button">
   <template>
-    <style is="custom-style">
+    <style include="shared-styles">
       :host {
         display: block;
         white-space: nowrap;
@@ -67,7 +68,10 @@
       }
     </style>
 
-    <paper-button on-tap="_addCard" class="custom indigo"><iron-icon icon="icons:credit-card"></iron-icon>&nbsp;Add Card&nbsp;</paper-button>
+    <paper-button on-tap="_addCard" class="custom indigo">
+      <iron-icon icon="icons:credit-card"></iron-icon>
+      Add Card
+    </paper-button>
 
   </template>
   <script>

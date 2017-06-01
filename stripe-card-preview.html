@@ -13,6 +13,8 @@
 <link rel="import" href="../paper-styles/typography.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 
+<link rel="import" href="shared-styles.html">
+
 <!--
 `stripe-card-preview`
 
@@ -21,7 +23,7 @@
 
 <dom-module id="stripe-card-preview">
   <template>
-    <style is="custom-style">
+    <style include="shared-styles">
       :host {
         display: block;
         white-space: nowrap;
@@ -142,7 +144,7 @@
         display: inline-block;
       }
 
-      .bs-ObjectList-cell([default='false']) {
+      .bs-ObjectList-cell([default="false"]) {
         display: none;
       }
 
