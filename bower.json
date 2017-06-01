@@ -4,6 +4,9 @@
   "authors": [
     "Keith Hill <keith@dexs.ca>"
   ],
+  "contributors": [
+    "Benny Powers <benny.p@elasticmedia.io>"
+  ],
   "description": "A credit card form and dialog using cc-form and stripe-cc-form",
   "keywords": [
     "web-component",
@@ -23,7 +26,7 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
-    "cc-form": "^1.0.12",
+    "cc-form": "bennypowers/cc-form#master",
     "paper-elements": "PolymerElements/paper-elements#^1.0.7",
     "neon-elements": "PolymerElements/neon-elements#^1.0.0",
     "neon-animation": "PolymerElements/neon-animation#^1.2.4",
